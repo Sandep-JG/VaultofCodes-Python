@@ -1,0 +1,145 @@
+Code 1
+def reverse_string(s):
+  reversed = ""
+  for i in range(len(s) - 1, -1, -1):
+      reversed += s[i]
+  return reversed
+def main():
+  input_string = "Hello, world!"
+  reversed_string = reverse_string(input_string)
+  print(f"Reversed string: {reversed_string}")
+if __name__ == "__main__":
+  main()
+
+The above code is not completely wrong and will provide the output, but the change i made was changing the variable name reversed to rev as reversed is an built in function name and as a good practise to not use the function names in naming variables i have changed that. Also i have made the string manipulation case easrier using the sting slicing method in a single statement
+
+THE IMPROVED CODE
+-----------------
+# Change 1: Rename the 'reversed' variable to 'rev' for better clarity.
+def reverse_string(s):
+    rev = s[::-1]  # Change 2: Use slicing to reverse the string.
+    return rev
+
+def main():
+    input_string = "Hello, world!"
+    reversed_string = reverse_string(input_string)
+    print(f"Reversed string: {reversed_string}")
+
+if __name__ == "__main__":
+    main()
+#The above code is not completely wrong and will provide the output, but the change i made was changing the variable name reversed to rev as reversed is an built in function name and as a good practise to not use the function names in naming variables i have changed that. Also i have made the string manipulation case easrier using the sting slicing method in a single statement
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Code2
+Objective: To identify and fix errors in a Python program that validates user input.
+
+def get_age():
+  age = input("Please enter your age: ")
+  if age.isnumeric() and age >= 18:
+    return int(age)
+  else:
+    return None
+def main():
+  age = get_age()
+  if age:
+    print(f"You are {age} years old and eligible.")
+  else:
+    print("Invalid input. You must be at least 18 years old.")
+if __name__ == "__main__":
+  main()
+
+We are directly comparing the string that the input function returns with an integer, which will cause a TypeError. Hence corrected the error by chaingin the code to convert to an interger before comparing the input 
+
+THE IMPROVED CODE
+-----------------
+
+def get_age():
+    # Get age as a string from the user
+    age_str = input("Please enter your age: ")
+    
+    # Check if the input is numeric
+    if age_str.isnumeric():
+        # Convert the numeric string to an integer
+        age = int(age_str)
+        
+        # Check if the age is greater than or equal to 18
+        if age >= 18:
+            return age  # Return the valid age
+    return None  # Return None for invalid input
+
+def main():
+    # Get the age using the get_age function
+    age = get_age()
+    
+    if age:
+        print(f"You are {age} years old and eligible.")
+    else:
+        print("Invalid input. You must be at least 18 years old.")
+
+if __name__ == "__main__":
+    main()
+# The change done in this code are in line 6 where the and operator is removed and use of type conversion to convert string datatype to integer to prevent the type error we gwt in the intial code
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Code3:
+Objective: To identify and fix errors in a Python program that reads and writes to a file.
+
+def read_and_write_file(filename):
+  try:
+    with open(filename, 'r') as file:
+      content = file.read()
+    with open(filename, 'w') as file:
+      file.write(content.upper())
+    print(f"File '{filename}' processed successfully.")
+  except Exception as e:
+    print(f"An error occurred: {str(e)}")
+def main():
+  filename = "sample.txt"
+  read_and_write_file(filename)
+if __name__ == "__main__":
+main()
+
+The intial code gave me an error becasue sample.txt was not created so i chaged the code by adding an if statement to 1st chek if sample.txt is present or not, if it is not present then create a new file for sample.txt. For the this th additional change required is in line one is import or to access the underlying operating system
+
+THE IMPROVED CODE
+-----------------
+
+import os
+
+def read_and_write_file(filename):
+    try:
+         # Verify the existence of the file (this is the primary code modification)
+        if not os.path.isfile(filename):
+            print(f"File '{filename}' does not exist. Creating a new file.")
+            with open(filename, 'w') as new_file:
+                new_file.write("")  # Create an empty file
+                print(f"New file '{filename}' created.")
+            return
+
+        # Review the material
+        with open(filename, 'r') as file:
+            content = file.read()
+
+        # Make a writing temporary file.
+        temp_filename = filename + '.tmp'
+        with open(temp_filename, 'w') as temp_file:
+            temp_file.write(content.upper())
+
+        # Substitute the temporary file for the original file.
+        os.replace(temp_filename, filename)
+
+        print(f"File '{filename}' processed successfully.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+def main():
+    filename = "sample.txt"
+    read_and_write_file(filename)
+
+if __name__ == "__main__":
+    main()
+# In the code the main cahnge is done fro line 6. the intial code gave me an error becasue sample.txt was not created so i chaged the code by adding an if statement to 1st chek if sample.txt is present or not, if it is not present then create a new file for sample.txt. For the this th additional change required is in line one is import or to access the underlying operating system
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
